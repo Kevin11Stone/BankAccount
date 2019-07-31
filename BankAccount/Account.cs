@@ -11,11 +11,38 @@ namespace BankAccount
     /// </summary>
     public class Account
     {
+        private string _accountNumber;
+
         // name of account holder
         // account number
         // balance
 
-        public string AccountNumber { get; set; }
+        // changed to fully implemented property to account for null value as account#
+        public string AccountNumber
+        {
+            get
+            {
+                return _accountNumber;
+            }
+            set
+            {
+                // this can be simplified, but not needed right now ( ?? ) 
+                if ( value == null )
+                {
+                    throw new ArgumentNullException($"{nameof(AccountNumber)} cannot be null");
+                }
+                // account for special characters
+                if (value.Contains("#"))
+                {
+                    throw new ArgumentException($"{nameof(AccountNumber)} cannot contain # signs");
+                }
+                _accountNumber = value;
+            }
+        }
+
+
+
+
 
         public string Owner { get; set; }
 
@@ -28,7 +55,7 @@ namespace BankAccount
         /// </summary>
         /// <param name="amount">The amount to add</param>
         /// <returns>The new balance</returns>
-        public double Deposit( double amount )
+        public double Deposit(double amount)
         {
             if (amount < 0)
             {
@@ -36,16 +63,21 @@ namespace BankAccount
                 throw new ArgumentException($"{nameof(amount)} cannot be negative");
             }
 
+            // can't change behavior here due to risk 
+            //amount = Math.Truncate(100 * amount) / 100;
+
             Balance += amount;
             return Balance;
         }
+
+
 
         /// <summary>
         /// Subtracts given amount from current balance
         /// </summary>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public double Withdraw( double amount )
+        public double Withdraw(double amount)
         {
             Balance -= amount;
             return Balance;
