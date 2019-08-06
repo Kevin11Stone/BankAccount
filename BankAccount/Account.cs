@@ -26,10 +26,15 @@ namespace BankAccount
             }
             set
             {
+
                 // this can be simplified, but not needed right now ( ?? ) 
                 if ( value == null )
                 {
                     throw new ArgumentNullException($"{nameof(AccountNumber)} cannot be null");
+                }
+                if (value.Trim() == string.Empty)
+                {
+                    throw new ArgumentException("Empty/whitespace is not allowed");
                 }
                 // account for special characters
                 if (value.Contains("#"))
