@@ -159,7 +159,7 @@ namespace BankAccount.Tests
         [TestMethod]
         public void AccountNum_SetToNull_ThrowsArugmentNullException()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => acc.AccountNumber == null);
+            Assert.ThrowsException<ArgumentNullException>(() => acc.AccountNumber = null);
         }
 
 
